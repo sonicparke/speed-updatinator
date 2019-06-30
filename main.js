@@ -42,10 +42,10 @@ function immediateHiSpeed() {
       console.log('doc.data():', doc.data());
       if (doc.data().name === 'kph') {
         console.log('doc.data().name kph:', doc.data().name);
-        hiSpeedValue = 75;
+        hiSpeedValue = 35;
       } else {
         console.log('doc.data().name mph:', doc.data().name);
-        hiSpeedValue = 150;
+        hiSpeedValue = 75;
       }
       console.log('doc :', doc);
       const obj = {
@@ -64,9 +64,9 @@ function reset() {
     querySnapshot.forEach((doc) => {
       console.log('doc.data() :', doc.data());
       if (doc.data().name === 'kph') {
-        speedValue = 26;
+        speedValue = 25;
       } else {
-        speedValue = 78;
+        speedValue = 65;
       }
       const obj = {
         value: speedValue,
@@ -82,14 +82,15 @@ function reset() {
 function variableSpeed(doc) {
   var _timer = window.setInterval(() => {
     if (doc.data().name === 'kph') {
-      const min = doc.data().value - 3;
-      const max = doc.data().value + 3;
+      const min = doc.data().value - 1;
+      const max = doc.data().value + 2;
       _speed = Math.floor(Math.random() * (max - min) + min);
+      console.log('_speed kph:', _speed);
     } else {
-      const min = doc.data().value - 5;
-      const max = doc.data().value + 5;
+      const min = doc.data().value - 1;
+      const max = doc.data().value + 2;
       _speed = Math.floor(Math.random() * (max - min) + min);
-      console.log('_speed :', _speed);
+      console.log('_speed mph:', _speed);
     }
     const obj = {
       value: _speed,
@@ -105,15 +106,21 @@ function variableSpeedIncrease(doc) {
     items.get().then((querySnapshot) => {
       querySnapshot.forEach((doc) => {
         var startingSpeed = doc.data().value;
-        var _speed = startingSpeed + 3;
+        var name = doc.data().name;
+        var _speed = startingSpeed + 1;
         const obj = {
           value: _speed,
           name: doc.data().name
         }
         items.doc(doc.id).set(obj);
+        if (name === 'mph' && startingSpeed === 75) {
+          window.clearInterval(_timer);
+        } else if (name === 'kph' && startingSpeed === 35) {
+          window.clearInterval(_timer);
+        }
       });
     });
-  }, 1000)
+  }, 200)
   timer.push(_timer);
 }
 
