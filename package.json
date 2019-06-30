@@ -1,0 +1,16 @@
+{
+  "name": "speed-updatinator",
+  "version": "1.0.0",
+  "description": "",
+  "main": "main.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "http-server"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "firebase": "^5.8.4",
+    "http-server": "^0.11.1"
+  }
+}
